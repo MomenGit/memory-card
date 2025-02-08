@@ -1,11 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
   @apply bg-white bg-fixed bg-center bg-cover;
-  background-image: url('/background.jpeg'); /* Adjust the path */
+  background-image: url("/background.jpeg"); /* Adjust the path */
 }
 
 .blue-stroke {
