@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-white bg-fixed bg-center bg-cover;
+  background-image: url('/background.jpeg'); /* Adjust the path */
+}
+
+.blue-stroke {
+  text-shadow: 2px 2px 3px #014a8e, -2px -2px 3px #014a8e, -2px 2px 3px #014a8e,
+    2px -2px 3px #014a8e;
+}
