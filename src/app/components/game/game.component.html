@@ -1,0 +1,94 @@
+<div
+  class="flex flex-col lg:flex-row gap-2 p-8 h-full items-center justify-around"
+>
+  <div class="flex lg:flex-col lg:text-2xl lg:h-full gap-8 justify-around">
+    <button type="button" id="pause">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        height="48px"
+        viewBox="0 -960 960 960"
+        width="48px"
+        fill="#FDC708"
+      >
+        <path
+          d="M600-200q-33 0-56.5-23.5T520-280v-400q0-33 23.5-56.5T600-760h80q33 0 56.5 23.5T760-680v400q0 33-23.5 56.5T680-200h-80Zm-320 0q-33 0-56.5-23.5T200-280v-400q0-33 23.5-56.5T280-760h80q33 0 56.5 23.5T440-680v400q0 33-23.5 56.5T360-200h-80Zm320-80h80v-400h-80v400Zm-320 0h80v-400h-80v400Zm0-400v400-400Zm320 0v400-400Z"
+        />
+      </svg>
+    </button>
+
+    <div
+      id="specs"
+      class="flex flex-col lg:gap-12 px-8 py-2 border-4 rounded-2xl text-secondary border-primary capitalize blue-stroke"
+    >
+      <div class="font-semibold">
+        {{ gameRecord.difficulty }}
+      </div>
+
+      <div class="flex gap-2">
+        <span class="font-semibold">Level</span>
+        <span class="font-mono">{{ gameRecord.level }}</span>
+      </div>
+      <div class="flex gap-2">
+        <span class="font-semibold">Total Time</span>
+        <span class="font-mono">10</span>
+      </div>
+    </div>
+    <div
+      id="specs"
+      class="flex flex-col lg:gap-12 px-8 py-2 border-4 rounded-2xl text-secondary border-primary capitalize blue-stroke"
+    >
+      <div
+        id="timer"
+        class="text-secondary blue-stroke font-semibold font-mono"
+      >
+        {{ timer }} sec
+      </div>
+      <div class="flex gap-2 text-secondary blue-stroke font-mono">
+        {{ currentScore }}
+      </div>
+    </div>
+  </div>
+
+  <div class="">
+    <div
+      class="grid justify-center items-center grid-cols-3 md:grid-cols-4 gap-4"
+    >
+      @for (pokemon of shuffledPokemons; track pokemon.id) {
+      <app-poke-card [pokemon]="pokemon" (cardClicked)="turn(pokemon.id)" />
+      }
+    </div>
+  </div>
+</div>
+
+<!-- Open the modal using ID.showModal() method -->
+<dialog id="myModal" class="modal modal-bottom sm:modal-middle" #myModal>
+  <div class="modal-box blue-stroke bg-black/50 border-4 border-primary">
+    <h3 class="text-xl text-secondary font-bold">You {{ gameState }}</h3>
+    <p class="py-4 text-lg">
+      @if (gameState==='win') {
+      {{
+        "Press Next Level key to proceed or press quit key to return to main screen"
+      }}
+      }@else{
+      {{
+        "Press Restart key to try again or press quit key to return to main screen"
+      }}}
+    </p>
+
+    <div class="modal-action">
+      <form method="dialog" class="flex gap-4">
+        <!-- if there is a button in form, it will close the modal -->
+        @if (gameState==='win') {
+        <button class="btn bg-primary">Next Level</button>} @else {
+        <button
+          class="btn bg-primary"
+          routerLink="/game/{{ gameRecord.difficulty }}"
+        >
+          Restart
+        </button>
+        }
+        <button class="btn btn-outline" routerLink="/">Quit</button>
+      </form>
+    </div>
+  </div>
+</dialog>

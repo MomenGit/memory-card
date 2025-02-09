@@ -1,0 +1,15 @@
+<div
+  class="flex items-center bg-blue-100 border-8 border-primary rounded-lg shadow relative w-fit md:min-h-44 md:min-w-40"
+  (click)="onClick()"
+>
+  <div
+    class="bg-primary font-semibold text-secondary text-xs lg:text-xl w-fit md:pb-2 md:px-4 rounded-br-2xl absolute self-start"
+  >
+    {{ pokemon()!.name }}
+  </div>
+  <img
+    [src]="pokemon()!.sprites.front_default"
+    [alt]="pokemon()!.name"
+    class="h-full w-full"
+  />
+</div>
