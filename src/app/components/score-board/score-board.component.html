@@ -1,0 +1,40 @@
+<div class="flex flex-col gap-8">
+  <div class="text-center text-5xl text-secondary font-bold blue-stroke">
+    Score Board
+  </div>
+  <div class="relative overflow-x-auto">
+    <table class="w-full font-mono text-sm text-left rtl:text-right text-white">
+      <thead
+        class="font-sans text-lg text-yellow-300 uppercase drop-shadow-2xl shadow-primary"
+      >
+        <tr>
+          <th scope="col" class="px-6 py-3">Date</th>
+          <th scope="col" class="px-6 py-3">Difficulty</th>
+          <th scope="col" class="px-6 py-3">State</th>
+          <th scope="col" class="px-6 py-3">Level</th>
+          <th scope="col" class="px-6 py-3">Score</th>
+          <th scope="col" class="px-6 py-3">Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (record of gameRecords; track record.id) {
+        <tr class="">
+          <td class="px-6 py-4">
+            {{ record.date | date : "hh:mm MMM, dd YYYY" }}
+          </td>
+          <th
+            scope="row"
+            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          >
+            {{ record.difficulty }}
+          </th>
+          <td class="px-6 py-4">{{ record.state }}</td>
+          <td class="px-6 py-4">{{ record.level }}</td>
+          <td class="px-6 py-4">{{ record.score }}</td>
+          <td class="px-6 py-4">{{ record.totalTime | date : "mm:ss" }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
