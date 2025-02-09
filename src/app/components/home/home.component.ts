@@ -4,7 +4,7 @@ import { ScoreBoardComponent } from '../score-board/score-board.component';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, ScoreBoardComponent],
+  imports: [ScoreBoardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
