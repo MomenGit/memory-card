@@ -8,7 +8,7 @@ export const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'game/:difficulty',
+    path: 'game',
     component: GameComponent,
   },
 ];

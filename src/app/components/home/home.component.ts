@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { ScoreBoardComponent } from '../score-board/score-board.component';
 
 @Component({
@@ -8,4 +8,11 @@ import { ScoreBoardComponent } from '../score-board/score-board.component';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {}
+export class HomeComponent {
+  private _router = inject(Router);
+  navigate(difficulty: string, level: number) {
+    this._router.navigate(['/game'], {
+      queryParams: { difficulty, level },
+    });
+  }
+}

@@ -8,17 +8,21 @@
         Start
       </div>
       <div class="flex flex-row justify-around text-3xl font-bold font-mono">
-        <a [routerLink]="['/game', 'easy']" class="text-secondary blue-stroke"
-          >Easy</a
+        <button
+          (click)="navigate('easy', 1)"
+          class="text-secondary blue-stroke"
         >
-        <a
-          [routerLink]="['/game', 'medium']"
+          Easy
+        </button>
+        <button
+          (click)="navigate('medium', 1)"
           class="text-orange-500 blue-stroke"
-          >Medium</a
         >
-        <a [routerLink]="['/game', 'hard']" class="text-red-600 blue-stroke"
-          >Hard</a
-        >
+          Medium
+        </button>
+        <button (click)="navigate('hard', 1)" class="text-red-600 blue-stroke">
+          Hard
+        </button>
       </div>
     </div>
   </div>

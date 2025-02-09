@@ -36,7 +36,7 @@ export class GameService {
     this.gameRecord = {
       id: `${Math.random() * 100}`,
       difficulty:
-        (this._activatedRoute.snapshot.paramMap.get(
+        (this._activatedRoute.snapshot.queryParamMap.get(
           'difficulty'
         ) as Difficulty) ?? ('easy' as Difficulty),
       score: 0,
