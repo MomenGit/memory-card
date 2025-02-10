@@ -5,7 +5,7 @@ import { Difficulty, difficultyCardsNoMap } from '../models/difficulty.type';
 import { ActivatedRoute } from '@angular/router';
 import { IPokemon } from '../models/ipokemon';
 import { Level, levelTimeMap } from '../models/level.type';
-import { AsyncSubject, BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { shuffleArray } from '../utils/shuffle.util';
 import { StorageService } from './storage.service';
 
@@ -27,18 +27,22 @@ export class GameService {
   showedPokemons$ = new BehaviorSubject<IPokemon[]>([]);
   selectedPokemons$ = new BehaviorSubject<Set<string>>(new Set<string>());
   timer$ = new BehaviorSubject<number>(0);
-  gameState$ = new Subject<'win' | 'lose'>();
+  gameState$ = new Subject<'win' | 'lose' | null>();
+  endMessage$ = new Subject<string>();
 
   constructor() {}
 
-  initializeLevel(level: Level = 1) {
+  initializeLevel() {
+    let difficulty =
+      (this._activatedRoute.snapshot.queryParamMap.get(
+        'difficulty'
+      ) as Difficulty) ?? ('easy' as Difficulty);
+    let level = (this._activatedRoute.snapshot.queryParamMap.get('level') ??
+      1) as Level;
     this.startTime = Date.now();
     this.gameRecord = {
       id: `${Math.random() * 100}`,
-      difficulty:
-        (this._activatedRoute.snapshot.queryParamMap.get(
-          'difficulty'
-        ) as Difficulty) ?? ('easy' as Difficulty),
+      difficulty: difficulty,
       score: 0,
       totalTime: 0,
       level: level,
@@ -59,6 +63,7 @@ export class GameService {
         console.log(err);
       },
     });
+    this.gameState$.next(null);
     this.gameState$.subscribe({
       next: (state) => {
         this.gameRecord.score = this.score$.getValue();
@@ -68,13 +73,16 @@ export class GameService {
       },
     });
   }
+
   processTime() {
     this.timer$.next(levelTimeMap[this.gameRecord.level]);
     if (this.timerInterval) clearInterval(this.timerInterval);
 
     this.timerInterval = setInterval(() => {
       if (this.timer$.getValue() === 0) {
-        if (!this.gameRecord.state) this.endGame('lose');
+        if (!this.gameRecord.state) {
+          this.endGame('lose', 'You lost as the timer ended.');
+        }
         clearInterval(this.timerInterval);
       } else {
         this.timer$.next(this.timer$.getValue() - 1);
@@ -92,10 +100,11 @@ export class GameService {
     this.processTime();
   }
 
-  endGame(state: 'win' | 'lose') {
+  endGame(state: 'win' | 'lose' | null, msg: string) {
     clearInterval(this.timerInterval);
     if (state === 'win') this.gameState$.next('win');
     else this.gameState$.next('lose');
+    this.endMessage$.next(msg);
   }
 
   processLevel() {
@@ -103,15 +112,20 @@ export class GameService {
       this.score$.getValue() ===
       difficultyCardsNoMap[this.gameRecord.difficulty][0]
     ) {
-      this.endGame('win');
+      this.endGame('win', 'Congratulations you won.');
     } else {
       this.processTurn();
     }
   }
 
-  playClick(pokemonId: string) {
+  playTurn(pokemonId: string) {
     if (this.selectedPokemons.has(pokemonId)) {
-      this.endGame('lose');
+      this.endGame(
+        'lose',
+        `You lost as you selected ${
+          this.pokemons.filter((p) => p.id === pokemonId)[0].name
+        } twice.`
+      );
     } else {
       this.selectedPokemons.add(pokemonId);
       this.score$.next(this.score$.getValue() + 1);
