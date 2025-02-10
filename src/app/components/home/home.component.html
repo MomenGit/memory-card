@@ -7,23 +7,38 @@
       <div class="text-center text-5xl text-secondary font-bold blue-stroke">
         Start
       </div>
-      <div class="flex flex-row justify-around text-3xl font-bold font-mono">
+      <div class="flex flex-row justify-around text-3xl font-medium font-mono">
         <button
           (click)="navigate('easy', 1)"
-          class="text-secondary blue-stroke"
+          class="text-yellow-300 blue-stroke hover:font-bold"
         >
           Easy
         </button>
         <button
           (click)="navigate('medium', 1)"
-          class="text-orange-500 blue-stroke"
+          class="text-orange-500 blue-stroke hover:font-bold"
         >
           Medium
         </button>
-        <button (click)="navigate('hard', 1)" class="text-red-600 blue-stroke">
+        <button
+          (click)="navigate('hard', 1)"
+          class="text-red-600 blue-stroke hover:font-bold"
+        >
           Hard
         </button>
       </div>
+    </div>
+  </div>
+  <div class="">
+    <div
+      class="tooltip tooltip-warning"
+      data-tip="It is simple. Just don't pick a card twice."
+    >
+      <button
+        class="btn btn-circle bg-secondary border-primary text-primary hover:bg-primary hover:text-secondary hover:border-secondary text-xl font-bold border-4"
+      >
+        ?
+      </button>
     </div>
   </div>
 </div>
