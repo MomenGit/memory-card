@@ -15,7 +15,8 @@ export class ScoreBoardComponent implements OnInit {
 
   ngOnInit(): void {
     if (this._storageService.gameRecords.length > 5)
-      this.gameRecords = this._storageService.gameRecords.slice(-6, -1);
+      this.gameRecords = this._storageService.gameRecords.slice(-5);
     else this.gameRecords = this._storageService.gameRecords;
+    this.gameRecords.reverse();
   }
 }
